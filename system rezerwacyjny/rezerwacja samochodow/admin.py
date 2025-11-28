@@ -8,3 +8,5 @@ admin.site.register(CarBrand)
 admin.site.register(Car)
 admin.site.register(Reservation)
 admin.site.register(Review)
+
+##GOTOWE TEGO NIE TYKAM 
