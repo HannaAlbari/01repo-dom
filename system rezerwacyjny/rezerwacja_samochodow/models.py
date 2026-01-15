@@ -30,7 +30,7 @@ class CarBrand(models.Model):
 #model3.wybor modeli samochodu
 
 class Car(models.Model):
-    Car_TYPES = (('E', 'Elektryczny'),('H', 'Hybrydowy'),('S', 'Spalinowy'),)
+    DRIVE_TYPES = (('E', 'Elektryczny'),('H', 'Hybrydowy'),('S', 'Spalinowy'),)
 #wiele aut do jednej marki to to co było wielw do jednego
     brand = models.ForeignKey(CarBrand, on_delete=models.CASCADE)
     model = models.CharField(max_length=20)
@@ -39,7 +39,7 @@ class Car(models.Model):
     Car_TYPES = models.CharField(max_length=20, choices=DRIVE_TYPES, default='Spalinowy')
     
     def __str__(self):
-        return f"{self.brand.name} {self.model} ({self.year})- {self.get_drive_type_display()}""
+        return f"{self.brand.name} {self.model} ({self.year})- {self.get_drive_type_display()}"
 
 #model4.  model rezerwacji
 def validate_future(value):
@@ -55,7 +55,7 @@ class Reservation(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
 
     def __str__(self):
-        returnf"{self.user.username} -> {self.car}"
+        return f"{self.user.username} -> {self.car}"
 
 def clean(self):
     if self.date_to < self.date_from:

@@ -11,7 +11,7 @@ from rest_framework.authtoken.models import Token
 
 from .models import *
 from .serializers import *
-from .permissions import IsAdminOrReadOnly
+#from .permissions import IsAdminOrReadOnly
 
 # lecimy z rezerwacjami
 class RegisterSerializer(generics.CreateAPIView):
@@ -30,13 +30,13 @@ def create(self, request, *args, **kwargs):
 class CarBrandViewSet(viewsets.ModelViewSet):
     queryset = CarBrand.objects.all()
     serializer_class = CarBrandSerializer
-    permission_classes = [IsAdminOrReadOnly]
+    #permission_classes = [IsAdminOrReadOnly]
 #Dotyczy modelu Reservation 
 #Tylko zalogowani (uwierzytelnieni) użytkownicy mogą wykonywać odczyt, tworzenie, aktualizacja, usuwanie na !rezerwacjach!
 class CarViewSet(viewsets.ModelViewSet):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
-    permission_classes = [IsAdminOrReadOnly]
+    #permission_classes = [IsAdminOrReadOnly]
 #Dotyczy modelu Reservation
 #Tylko zalogowani (uwierzytelnieni) użytkownicy mogą odczyt, tworzenie, aktualizacja, usuwanie na rezerwacjach
 class ReservationViewSet(viewsets.ModelViewSet):
@@ -87,7 +87,7 @@ class UserReservationsList(APIView):
         reservations = Reservation.objects.filter(user=request.user)
         serializer = ReservationSerializer(reservations, many=True)
         return Response(serializer.data)
- +
+ 
 
 
 
