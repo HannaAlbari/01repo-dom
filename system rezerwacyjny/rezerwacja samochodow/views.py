@@ -23,7 +23,7 @@ def create(self, request, *args, **kwargs):
         token, created = Token.objects.get_or_create(user=user)
         return Response({"token": token.key})
 
-# crud _ dalej trzeba zobacztć co to?!!@!\
+# crud _ dalej trzeba zobacztć co to?!!@!\ <--- już wiem
 #Określa wszystkie obiekty modelu CarBrand, będą dostępne poprzez ten ViewSet.
 #Określa serializator używany do obiektów CarBrand (walidacja danych wejsciowych chyba)
 #Definiuje uprawnienia dostępu: (administratorzy mogą tworzyć, aktualizować lub usuwać (POST, PUT, PATCH, DELETE).) inni tylko GET
@@ -62,6 +62,31 @@ class CarsStartingWith(APIView):
         cars = Car.objects.filter(model__istartswith=letter)
         return Response(CarSerializer(cars, many=True).data)
 
+from django.contrib.auth import authenticate
+#ochrona sprawdzanie czu ten któś istnieje i czy hasło jest ok
+from rest_framework import status
+#nr błędów (jak moja obecność na informatyce) zamienia na czytelne nazwy
+
+# Logowanie (to chyba zwraca token?!) oby tak to działało
+# zwraca token
+class LoginView(APIView):
+    def post(self, request):
+        username = request.data.get("username")
+        password = request.data.get("password")
+        user = authenticate(username=username, password=password)
+        if user:
+            token, _ = Token.objects.get_or_create(user=user)
+            return Response({"token": token.key})
+        return Response({"error": "Błędne dane logowania"}, status=status.HTTP_400_BAD_REQUEST)
+
+# Drugi endpoint poza CRUD - Lista rezerwacji aktualnego użytkownika
+# Endpoint "Tylko dla mnie" jakiś kowalski nie zobaczy rezerwacji Nowaka 
+class UserReservationsList(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        reservations = Reservation.objects.filter(user=request.user)
+        serializer = ReservationSerializer(reservations, many=True)
+        return Response(serializer.data)
  
 
 
