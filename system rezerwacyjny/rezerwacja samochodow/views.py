@@ -87,7 +87,7 @@ class UserReservationsList(APIView):
         reservations = Reservation.objects.filter(user=request.user)
         serializer = ReservationSerializer(reservations, many=True)
         return Response(serializer.data)
- 
+ +
 
 
 
