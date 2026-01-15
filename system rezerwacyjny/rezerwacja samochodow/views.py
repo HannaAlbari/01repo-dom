@@ -52,7 +52,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
 #Endpointy te dodatkowe nie wiem jak je nazwać 
 #Ta klasa do pobierania liczby rezerwacji w danym miesiącu.
-lass MonthlyReport(APIView):
+class MonthlyReport(APIView):
     def get(self, request, month):
         count = Reservation.objects.filter(date_from__month=month).count
         return Response({"month": month, "reservations": count})
