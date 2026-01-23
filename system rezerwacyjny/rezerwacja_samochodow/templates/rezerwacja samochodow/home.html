@@ -1,0 +1,46 @@
+{% extends "rezerwacja_samochodow/base.html" %}
+
+{% block title %}W{% endblock %}
+
+{% block content %}
+<div style="text-align: center; padding: 100px 20px;">
+    <h1 style="font-size: 64px; margin-bottom: 30px; letter-spacing: 5px;">
+        REZERWACJA SAMOCHODÓW
+    </h1>
+
+    <p style="font-size: 24px; font-style: italic; color: #a0a0a0; max-width: 800px; margin: 0 auto 50px; line-height: 1.8;">
+        Wkrocz w odmęty świata pochłoniętego przez mrok...
+        <br><br>
+        Tam gdzie starożytne królestwa walczą o przetrwanie,
+        <br>
+        gdzie rasy dawno zapomnianych krain łączą siły przeciw niewidzialnemu wrogowi,
+        <br>
+        a gildie poszukiwaczy odkrywają tajemnice plagi,
+        <br>
+        która pochłania wszystko na swojej drodze.
+        <br><br>
+        <span style="color: #8b0000; font-weight: bold;">
+            Czy chcesz wynająć auto? 
+        </span>
+    </p>
+
+    <div style="margin-top: 60px;">
+        <a href="/continents/" style="
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #8b0000, #4a0000);
+            color: #d4af37;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border: 2px solid #d4af37;
+            border-radius: 5px;
+            transition: all 0.3s;
+        ">
+            Wynajmij
+        </a>
+    </div>
+</div>
+{% endblock %}
