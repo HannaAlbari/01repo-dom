@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block title %}Moje Rezerwacje{% endblock %}
+
+{% block extra_css %}
+<style>
+    .list-container {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .list-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        border-bottom: 2px solid #f0f2f5;
+        padding-bottom: 15px;
+    }
+
+    .list-header h2 {
+        margin: 0;
+        color: #333;
+    }
+
+    .btn-new {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background 0.3s;
+    }
+
+    .btn-new:hover {
+        background-color: #218838;
+    }
+
+    /* Tabela */
+    .res-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .res-table th, .res-table td {
+        text-align: left;
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .res-table th {
+        background-color: #f8f9fa;
+        color: #555;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+    }
+
+    .res-table tr:hover {
+        background-color: #f1f3f5;
+    }
+
+    /* Statusy i daty */
+    .car-name {
+        font-weight: bold;
+        color: #007bff;
+    }
+
+    .date-info {
+        font-family: monospace;
+        color: #555;
+        font-size: 0.95rem;
+    }
+
+    /* Empty State (gdy brak rezerwacji) */
+    .empty-state {
+        text-align: center;
+        padding: 50px 20px;
+        color: #777;
+    }
+    
+    .empty-icon {
+        font-size: 48px;
+        margin-bottom: 15px;
+        display: block;
+        opacity: 0.5;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="list-container">
+    <div class="list-header">
+        <h2>Moje Rezerwacje</h2>
+        <a href="{% url 'reservation-create' %}" class="btn-new">+ Nowa rezerwacja</a>
+    </div>
+
+    {% if reservations %}
+        <div style="overflow-x: auto;">
+            <table class="res-table">
+                <thead>
+                    <tr>
+                        <th>Samochód</th>
+                        <th>Data odbioru</th>
+                        <th>Data zwrotu</th>
+                        <th>Utworzono</th>
+                        <th>Akcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for res in reservations %}
+                    <tr>
+                        <td class="car-name">{{ res.car }}</td>
+                        
+                        <td class="date-info">{{ res.date_from|date:"d.m.Y" }}</td>
+                        <td class="date-info">{{ res.date_to|date:"d.m.Y" }}</td>
+                        <td>{{ res.created_at|date:"d.m.Y H:i" }}</td>
+                        
+                        <td>
+                            <a href="#" style="color: #dc3545; text-decoration: none; font-size: 0.9rem;">Anuluj</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <span class="empty-icon">🚗</span>
+            <h3>Nie masz jeszcze żadnych rezerwacji.</h3>
+            <p>Wybierz samochód i ruszaj w drogę!</p>
+            <br>
+            <a href="{% url 'reservation-create' %}" class="btn-new">Zarezerwuj teraz</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

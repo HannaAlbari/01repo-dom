@@ -14,10 +14,10 @@ from .serializers import *
 #from .permissions import IsAdminOrReadOnly
 
 # lecimy z rezerwacjami
-class RegisterSerializer(generics.CreateAPIView):
+class RegisterViewSet(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
-def create(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs):
         response = super().create(request, *args, **kwargs)
         user = User.objects.get(username=request.data["username"])
         token, created = Token.objects.get_or_create(user=user)
@@ -27,9 +27,9 @@ def create(self, request, *args, **kwargs):
 #Określa wszystkie obiekty modelu CarBrand, będą dostępne poprzez ten ViewSet.
 #Określa serializator używany do obiektów CarBrand (walidacja danych wejsciowych chyba)
 #Definiuje uprawnienia dostępu: (administratorzy mogą tworzyć, aktualizować lub usuwać (POST, PUT, PATCH, DELETE).) inni tylko GET
-class CarBrandViewSet(viewsets.ModelViewSet):
-    queryset = CarBrand.objects.all()
-    serializer_class = CarBrandSerializer
+#class CarBrandViewSet(viewsets.ModelViewSet):
+    #queryset = CarBrand.objects.all()
+    #serializer_class = CarBrandSerializer
     #permission_classes = [IsAdminOrReadOnly]
 #Dotyczy modelu Reservation 
 #Tylko zalogowani (uwierzytelnieni) użytkownicy mogą wykonywać odczyt, tworzenie, aktualizacja, usuwanie na !rezerwacjach!
@@ -54,7 +54,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
 #Ta klasa do pobierania liczby rezerwacji w danym miesiącu.
 class MonthlyReport(APIView):
     def get(self, request, month):
-        count = Reservation.objects.filter(date_from__month=month).count
+        count = Reservation.objects.filter(date_from__month=month).count()
         return Response({"month": month, "reservations": count})
 #klasa do pobierania listy samochodów, których model zaczyna się na określoną literę.
 class CarsStartingWith(APIView):
@@ -88,7 +88,10 @@ class UserReservationsList(APIView):
         serializer = ReservationSerializer(reservations, many=True)
         return Response(serializer.data)
  
+# views.py
 
+def home_view(request):
+    return render(request, 'rezerwacja_samochodow/home.html')
 
 
 

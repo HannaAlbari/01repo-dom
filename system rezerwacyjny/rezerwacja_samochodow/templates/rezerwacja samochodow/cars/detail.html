@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ car.brand.name }} {{ car.model }} - Szczegóły{% endblock %}
+
+{% block extra_css %}
+<style>
+    .detail-container {
+        max-width: 1100px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    /* Karta główna z podziałem na pół */
+    .car-showcase {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        overflow: hidden;
+        margin-bottom: 40px;
+    }
+
+    /* Lewa kolumna - Wizualizacja */
+    .visual-section {
+        background: linear-gradient(135deg, #2c3e50, #4ca1af);
+        display: flex;
+        justify_content: center;
+        align-items: center;
+        min-height: 400px;
+        color: white;
+        font-size: 5rem;
+    }
+
+    /* Prawa kolumna - Dane */
+    .info-section {
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify_content: center;
+    }
+
+    .car-title {
+        font-size: 2.5rem;
+        margin: 0 0 10px 0;
+        color: #333;
+    }
+
+    .car-badge {
+        display: inline-block;
+        background-color: #e9ecef;
+        color: #495057;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        width: fit-content;
+    }
+
+    /* Tabela specyfikacji */
+    .specs-list {
+        list-style: none;
+        padding: 0;
+        margin: 20px 0;
+    }
+
+    .specs-list li {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid #eee;
+        font-size: 1.1rem;
+    }
+
+    .specs-label {
+        color: #777;
+        font-weight: 500;
+    }
+
+    .specs-value {
+        color: #333;
+        font-weight: bold;
+    }
+
+    .btn-action-large {
+        display: block;
+        width: 100%;
+        text-align: center;
+        background-color: #007bff;
+        color: white;
+        padding: 18px;
+        font-size: 1.2rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background 0.3s;
+        margin-top: 20px;
+    }
+
+    .btn-action-large:hover {
+        background-color: #0056b3;
+    }
+
+    /* Sekcja recenzji */
+    .reviews-section {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .review-item {
+        border-bottom: 1px solid #eee;
+        padding: 20px 0;
+    }
+    
+    .review-item:last-child {
+        border-bottom: none;
+    }
+
+    .review-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    .review-content {
+        font-style: italic;
+        color: #444;
+    }
+
+    @media (max-width: 768px) {
+        .car-showcase {
+            grid-template-columns: 1fr; /* Na telefonie jedna kolumna */
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="detail-container">
+    
+    <a href="{% url 'car-list' %}" style="display: inline-block; margin-bottom: 20px; text-decoration: none; color: #666;">
+        &larr; Wróć do floty
+    </a>
+
+    <div class="car-showcase">
+        <div class="visual-section">
+            🚗
+        </div>
+
+        <div class="info-section">
+            <h1 class="car-title">{{ car.brand.name }} {{ car.model }}</h1>
+            <span class="car-badge">Dostępny od ręki</span>
+
+            <ul class="specs-list">
+                <li>
+                    <span class="specs-label">Rok produkcji</span>
+                    <span class="specs-value">{{ car.year }}</span>
+                </li>
+                <li>
+                    <span class="specs-label">Napęd</span>
+                    <span class="specs-value">{{ car.get_drive_type_display }}</span>
+                </li>
+                <li>
+                    <span class="specs-label">ID Pojazdu</span>
+                    <span class="specs-value">#{{ car.id }}</span>
+                </li>
+            </ul>
+
+            <a href="{% url 'reservation-create' %}" class="btn-action-large">
+                Rezerwuj ten samochód
+            </a>
+        </div>
+    </div>
+
+    <div class="reviews-section">
+        <h3>Opinie klientów ({% if reviews %}{{ reviews.count }}{% else %}0{% endif %})</h3>
+        
+        {% for review in reviews %}
+            <div class="review-item">
+                <div class="review-header">
+                    <strong>{{ review.user.username }}</strong>
+                    <span>Ocena: {{ review.rating }}/5</span>
+                </div>
+                <p class="review-content">"{{ review.comment }}"</p>
+            </div>
+        {% empty %}
+            <p style="color: #888; padding: 20px 0;">Nikt jeszcze nie ocenił tego samochodu. Bądź pierwszy!</p>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

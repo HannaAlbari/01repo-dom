@@ -24,10 +24,6 @@ class RegisterSerializer(serializers.ModelSerializer):
 # Podstawowe serializatory dla modeli
 # Niemiecki Bauer mówi to coś jest do tego czegoś
 #Dane zamieni na tego JSON
-class CarBrandSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CarBrand
-        fields = '__all__'
 
 class CarSerializer(serializers.ModelSerializer):
     class Meta:

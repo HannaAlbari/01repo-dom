@@ -1,49 +1,44 @@
-{% extends "rezerwacja_samochodow/base.html" %}
+{% extends 'base.html' %}
 
-'''NIEDOKONCZONE - DO POPRAWY, do dodania w urls.py, weryfikacja views.py'
+{% block title %}Strona Główna - Rezerwacja{% endblock %}
 
+{% block extra_css %}
+<style>
+    /* Style specyficzne tylko dla Home - centrowanie */
+    .hero-container {
+        height: 100vh;
+        display: flex;
+        justify_content: center;
+        align_items: center;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
 
-{% block title %}W{% endblock %}
+    .cta-button {
+        padding: 20px 50px;
+        font-size: 24px;
+        font-weight: bold;
+        color: white;
+        background-color: #007bff;
+        text-decoration: none;
+        border-radius: 50px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .cta-button:hover {
+        background-color: #0056b3;
+        box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+        transform: translateY(-2px);
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<div style="text-align: center; padding: 100px 20px;">
-    <h1 style="font-size: 64px; margin-bottom: 30px; letter-spacing: 5px;">
-        REZERWACJA SAMOCHODÓW
-    </h1>
-
-    <p style="font-size: 24px; font-style: italic; color: #a0a0a0; max-width: 800px; margin: 0 auto 50px; line-height: 1.8;">
-        Wkrocz w odmęty świata pochłoniętego przez mrok...
-        <br><br>
-        Tam gdzie starożytne królestwa walczą o przetrwanie,
-        <br>
-        gdzie rasy dawno zapomnianych krain łączą siły przeciw niewidzialnemu wrogowi,
-        <br>
-        a gildie poszukiwaczy odkrywają tajemnice plagi,
-        <br>
-        która pochłania wszystko na swojej drodze.
-        <br><br>
-        <span style="color: #8b0000; font-weight: bold;">
-            Czy chcesz wynająć auto? 
-        </span>
-    </p>
-
-    <div style="margin-top: 60px;">
-        <a href="/continents/" style="
-            display: inline-block;
-            padding: 15px 40px;
-            background: linear-gradient(135deg, #8b0000, #4a0000);
-            color: #d4af37;
-            text-decoration: none;
-            font-size: 20px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            border: 2px solid #d4af37;
-            border-radius: 5px;
-            transition: all 0.3s;
-        ">
-            Wynajmij
+    <div class="hero-container">
+        <a href="{% url 'reservation-create' %}" class="cta-button">
+            Zarezerwuj swój samochód
         </a>
     </div>
-</div>
 {% endblock %}

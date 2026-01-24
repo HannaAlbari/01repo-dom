@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}Logowanie - Wypożyczalnia{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Kontener centrujący formularz na ekranie */
+    .login-wrapper {
+        display: flex;
+        justify_content: center;
+        align_items: center;
+        min-height: 80vh; /* Wysokość, żeby było na środku */
+    }
+
+    /* Wygląd samej "karty" logowania */
+    .login-card {
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+    }
+
+    .login-card h2 {
+        margin-bottom: 25px;
+        color: #333;
+    }
+
+    /* Pola formularza */
+    .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #555;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        box-sizing: border-box; /* Żeby padding nie psuł szerokości */
+        transition: border-color 0.3s;
+    }
+
+    .form-group input:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    /* Przycisk logowania */
+    .btn-submit {
+        width: 100%;
+        padding: 12px;
+        background-color: #28a745; /* Zielony kolor dla akcji "Zatwierdź" */
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn-submit:hover {
+        background-color: #218838;
+    }
+
+    .error-message {
+        color: #dc3545;
+        background-color: #f8d7da;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        font-size: 0.9rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-wrapper">
+    <div class="login-card">
+        <h2>Zaloguj się</h2>
+
+        {% if error %}
+            <div class="error-message">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="username">Nazwa użytkownika</label>
+                <input type="text" id="username" name="username" required placeholder="Wpisz login...">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Hasło</label>
+                <input type="password" id="password" name="password" required placeholder="Wpisz hasło...">
+            </div>
+
+            <button type="submit" class="btn-submit">Zaloguj się</button>
+        </form>
+        
+        <p style="margin-top: 20px; color: #777;">
+            Nie masz konta? <a href="#" style="color: #007bff; text-decoration: none;">Zarejestruj się</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block title %}Rejestracja - Wypożyczalnia{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Ten sam styl co w login.html dla spójności */
+    .register-wrapper {
+        display: flex;
+        justify_content: center;
+        align_items: center;
+        min-height: 90vh;
+        padding: 20px 0;
+    }
+
+    .register-card {
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 450px; /* Nieco szersza niż logowanie */
+        text-align: center;
+    }
+
+    .register-card h2 {
+        margin-bottom: 25px;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #555;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        box-sizing: border-box;
+        transition: border-color 0.3s;
+    }
+
+    .form-group input:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 12px;
+        background-color: #007bff; /* Niebieski dla rejestracji */
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 10px;
+    }
+
+    .btn-submit:hover {
+        background-color: #0056b3;
+    }
+
+    .error-message {
+        color: #721c24;
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        text-align: left;
+        font-size: 0.9rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="register-wrapper">
+    <div class="register-card">
+        <h2>Stwórz konto</h2>
+
+        {% if error %}
+            <div class="error-message">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="username">Nazwa użytkownika</label>
+                <input type="text" id="username" name="username" required placeholder="Np. jan_kowalski">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Adres email</label>
+                <input type="email" id="email" name="email" required placeholder="jan@example.com">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Hasło</label>
+                <input type="password" id="password" name="password" required placeholder="Minimum 8 znaków">
+            </div>
+
+            <div class="form-group">
+                <label for="password_confirm">Powtórz hasło</label>
+                <input type="password" id="password_confirm" name="password_confirm" required placeholder="Powtórz hasło">
+            </div>
+
+            <button type="submit" class="btn-submit">Zarejestruj się</button>
+        </form>
+        
+        <p style="margin-top: 20px; color: #777;">
+            Masz już konto? <a href="{% url 'login' %}" style="color: #007bff; text-decoration: none;">Zaloguj się</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
