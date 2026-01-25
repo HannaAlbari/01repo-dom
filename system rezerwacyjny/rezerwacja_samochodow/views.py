@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from django.http import HttpResponse
 #Mój widok
 from rest_framework.views import APIView
 #szybkie tworzenie kompletnych CRUD

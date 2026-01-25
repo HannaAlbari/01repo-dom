@@ -4,12 +4,13 @@ from .views import *
 from . import views
 
 router = DefaultRouter()
-router.register(r'cars', CarViewSet)
-router.register(r'reservations', ReservationViewSet)
-router.register(r'reviews', ReviewViewSet)
+router.register(r'api/cars', CarViewSet)
+router.register(r'api/reservations', ReservationViewSet)
+router.register(r'api/reviews', ReviewViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('', views.home_view, name='home'),
+    path('home/', views.home_view, name='home_a'),
     # Rejestracja i logowanie - to brakowało
     path('register/', RegisterViewSet.as_view(), name='register'),
     path('login/', LoginView.as_view(), name='login'),
@@ -17,5 +18,5 @@ urlpatterns = [
     path('report/monthly/<int:month>/', MonthlyReport.as_view()),
     path('cars/starts-with/<str:letter>/', CarsStartingWith.as_view()),
     path('my-reservations/', UserReservationsList.as_view()),
-    path('', views.home_view, name='home'),
+    path('', include(router.urls)),
 ]

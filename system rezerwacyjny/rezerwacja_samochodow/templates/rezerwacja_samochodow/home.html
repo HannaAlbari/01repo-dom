@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'rezerwacja_samochodow/base.html' %}
 
 {% block title %}Strona Główna - Rezerwacja{% endblock %}
 
@@ -37,7 +37,7 @@
 
 {% block content %}
     <div class="hero-container">
-        <a href="{% url 'reservation-create' %}" class="cta-button">
+        <a href="/reservation/create/" class="cta-button">
             Zarezerwuj swój samochód
         </a>
     </div>

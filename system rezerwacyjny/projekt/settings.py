@@ -31,13 +31,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'rezerwacja_samochodow.apps.BibliotekaConfig',
+    #'rezerwacja_samochodow.apps.BibliotekaConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rezerwacja_samochodow',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
