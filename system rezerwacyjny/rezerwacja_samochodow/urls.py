@@ -12,6 +12,15 @@ urlpatterns = [
     path('', views.home_view, name='home'),
     path('home/', views.home_view, name='home_a'),
     # Rejestracja i logowanie - to brakowało
+    path('cars/', views.list_view, name='car_list_html'),
+    path('cars/<int:pk>', views.detail_view, name='car_detail_html'),
+    path('cars/<int:car_id>/reserve/', views.create_car_view, name='create_reservation_html'),
+    path('register-page/', views.register_view, name='register_html'),
+    path('login-page/', views.login_view, name='login_html'),
+    path('reservation/', views.create_reservations_view, name='create_reservations_html'),
+    #path('', views.home_view, name='home'),   
+    #tu EP do API
+
     path('register/', RegisterViewSet.as_view(), name='register'),
     path('login/', LoginView.as_view(), name='login'),
     # Moje dodatkowe endpointy

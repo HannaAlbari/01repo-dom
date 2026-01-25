@@ -92,6 +92,27 @@ class UserReservationsList(APIView):
 
 def home_view(request):
     return render(request, 'rezerwacja_samochodow/home.html')
+#
+def login_view(request):
+    return render(request, 'rezerwacja_samochodow/auth/login.html')
+
+def register_view(request):
+    return render(request, 'rezerwacja_samochodow/auth/register.html')
+
+def create_car_view(request):
+    return render(request, 'rezerwacja_samochodow/cars/create.html')
+
+def detail_view(request):
+    return render(request, 'rezerwacja_samochodow/cars/detail.html')
+
+def list_view(request):
+    return render(request, 'rezerwacja_samochodow/cars/list.html')
+
+def create_reservations_view(request):
+    return render(request, 'rezerwacja_samochodow/reservations/create.html')
+
+def user_list_view(request):
+    return render(request, 'rezerwacja_samochodow/reserwations/user_list.html')
 
 
 
