@@ -10,12 +10,13 @@ router.register(r'reviews', ReviewViewSet, basename='reviews')
 
 urlpatterns = [
     path('', views.home_view, name='home'),
-    path('home/', views.home_view, name='home_a'),
+    path('home/', views.home_view, name='home_view'),
     # Rejestracja i logowanie - to brakowało
     path('cars/', views.list_view, name='car_list_html'),
     path('cars/<int:pk>', views.detail_view, name='car_detail_html'),
     path('cars/<int:car_id>/reserve/', views.create_car_view, name='create_reservation_html'),
     path('register-page/', views.register_view, name='register_html'),
+    path('logout/', views.logout_view, name='logout'),
     path('login-page/', views.login_view, name='login_html'),
     path('reservation/', views.create_reservations_view, name='create_reservations_html'),
     #path('', views.home_view, name='home'),   
@@ -25,8 +26,6 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     # Moje dodatkowe endpointy
     path('report/monthly/<int:month>/', MonthlyReport.as_view()),
-    path('cars/starts-with/<str:letter>/', CarsStartingWith.as_view()),
     path('my-reservations/', UserReservationsList.as_view()),
-    path('api/', include(router.urls)),
     #path('/reservation/create/', views.Reservation_create, name='home_a'),
 ]

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 #Mój widok
 from rest_framework.views import APIView
@@ -6,14 +6,17 @@ from rest_framework.views import APIView
 from rest_framework import viewsets, generics
 #zwracanie danych JSON
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.authtoken.models import Token
-
+from rest_framework.decorators import permission_classes
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+from django.contrib.admin.views.decorators import staff_member_required
 from .models import *
 from .serializers import *
 #from .permissions import IsAdminOrReadOnly
 
-# lecimy z rezerwacjami
+# lecimy z rezerwacjami - rejestracja osoby do api z ograniczeniem (he he umysłowym)
 class RegisterViewSet(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
@@ -36,7 +39,7 @@ class RegisterViewSet(generics.CreateAPIView):
 class CarViewSet(viewsets.ModelViewSet):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
-    #permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [IsAuthenticated]
 #Dotyczy modelu Reservation
 #Tylko zalogowani (uwierzytelnieni) użytkownicy mogą odczyt, tworzenie, aktualizacja, usuwanie na rezerwacjach
 class ReservationViewSet(viewsets.ModelViewSet):
@@ -53,14 +56,10 @@ class ReviewViewSet(viewsets.ModelViewSet):
 #Endpointy te dodatkowe nie wiem jak je nazwać 
 #Ta klasa do pobierania liczby rezerwacji w danym miesiącu.
 class MonthlyReport(APIView):
+    permission_classes = [IsAdminUser]
     def get(self, request, month):
         count = Reservation.objects.filter(date_from__month=month).count()
         return Response({"month": month, "reservations": count})
-#klasa do pobierania listy samochodów, których model zaczyna się na określoną literę.
-class CarsStartingWith(APIView):
-   def get(self, request, letter):
-        cars = Car.objects.filter(model__istartswith=letter)
-        return Response(CarSerializer(cars, many=True).data)
 
 from django.contrib.auth import authenticate
 #ochrona sprawdzanie czu ten któś istnieje i czy hasło jest ok
@@ -92,13 +91,14 @@ class UserReservationsList(APIView):
 
 def home_view(request):
     return render(request, 'rezerwacja_samochodow/home.html')
-#
+
 def login_view(request):
     return render(request, 'rezerwacja_samochodow/auth/login.html')
 
 def register_view(request):
     return render(request, 'rezerwacja_samochodow/auth/register.html')
 
+@staff_member_required
 def create_car_view(request):
     return render(request, 'rezerwacja_samochodow/cars/create.html')
 
@@ -108,11 +108,19 @@ def detail_view(request):
 def list_view(request):
     return render(request, 'rezerwacja_samochodow/cars/list.html')
 
+@login_required(login_url='login')
 def create_reservations_view(request):
     return render(request, 'rezerwacja_samochodow/reservations/create.html')
 
+@login_required(login_url='login')
 def user_list_view(request):
-    return render(request, 'rezerwacja_samochodow/reserwations/user_list.html')
+    reservation = Reservation.objects.filter(user=request.user)
+    return render(request, 'rezerwacja_samochodow/reserwations/user_list.html',
+                  {'reservation': reservation})
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')
 
 
 

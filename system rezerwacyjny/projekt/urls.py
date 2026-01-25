@@ -16,10 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rezerwacja_samochodow.urls import router
 
 
 urlpatterns = [
     path('rezerwacja_samochodow/', include('rezerwacja_samochodow.urls')),
     path('admin/', admin.site.urls),
+    path('api/', include(router.urls)),
 ]
 
