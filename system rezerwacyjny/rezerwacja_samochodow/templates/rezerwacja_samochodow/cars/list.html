@@ -86,6 +86,7 @@
         margin-bottom: 5px;
         display: flex;
         align-items: center;
+        padding-left: 1em;
     }
 
     .car-specs li::before {
@@ -132,4 +133,32 @@
         <p>Wybierz samochód idealny dla Ciebie</p>
     </div>
 
-    <div class="car
+    <div class="car-grid">
+        {% if cars %}
+            {% for car in cars %}
+            <div class="car-card">
+                <div class="car-image-placeholder">
+                    🚗
+                </div>
+                <div class="car-content">
+                    <h3 class="car-title">{{ car.brand }} {{ car.model }}</h3>
+                    <ul class="car-specs">
+                        <li>Rok: {{ car.year }}</li>
+                        <li>Typ: {{ car.car_type }}</li>
+                        <li>Cena: {{ car.price_per_day }} zł/dzień</li>
+                        {% if car.mileage %}
+                        <li>Przebieg: {{ car.mileage }} km</li>
+                        {% endif %}
+                    </ul>
+                    <a href="{% url 'car_detail_html' car.pk %}" class="btn-rent">Zobacz szczegóły</a>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-cars">
+                <p>Brak dostępnych samochodów w naszej flocie.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
