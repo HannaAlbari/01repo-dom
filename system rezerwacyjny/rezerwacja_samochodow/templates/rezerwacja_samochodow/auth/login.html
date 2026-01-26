@@ -7,8 +7,8 @@
     /* Kontener centrujący formularz na ekranie */
     .login-wrapper {
         display: flex;
-        justify_content: center;
-        align_items: center;
+        justify-content: center;
+        align-items: center;
         min-height: 80vh; /* Wysokość, żeby było na środku */
     }
 
@@ -113,8 +113,17 @@
         </form>
         
         <p style="margin-top: 20px; color: #777;">
-            Nie masz konta? <a href="#" style="color: #007bff; text-decoration: none;">Zarejestruj się</a>
+            Nie masz konta? <a href="{% url 'register_html' %}" style="color: #007bff; text-decoration: none;">Zarejestruj się</a>
         </p>
+
+        <script>
+            // Debug - sprawdzenie czy formularz działa
+            document.querySelector('form').addEventListener('submit', function(e) {
+                console.log('Formularz wysłany!');
+                console.log('Username:', document.getElementById('username').value);
+                console.log('Password:', document.getElementById('password').value ? '***' : 'BRAK');
+            });
+        </script>
     </div>
 </div>
 {% endblock %}

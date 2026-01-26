@@ -40,6 +40,11 @@ class CarViewSet(viewsets.ModelViewSet):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_permissions(self):
+        if self.action in ['create', 'update', 'destroy']:
+            return [IsAdminUser()]  # Tylko admin
+        return [IsAuthenticated()]  # Wszyscy zalogowani
 #Dotyczy modelu Reservation
 #Tylko zalogowani (uwierzytelnieni) użytkownicy mogą odczyt, tworzenie, aktualizacja, usuwanie na rezerwacjach
 class ReservationViewSet(viewsets.ModelViewSet):
@@ -123,5 +128,32 @@ def logout_view(request):
     return redirect('home')
 
 
+#zobaczymy czy zadziała
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
 
+def login_view(request):
+    # Jeśli użytkownik już zalogowany, przekieruj
+    if request.user.is_authenticated:
+        return redirect('home')
     
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        # Debug - usuń po sprawdzeniu
+        print(f"Próba logowania: {username}")
+        
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            messages.success(request, 'Zalogowano pomyślnie!')
+            return redirect('home')
+        else:
+            return render(request, 'rezerwacja_samochodow/auth/login.html', {
+                'error': 'Nieprawidłowa nazwa użytkownika lub hasło'
+            })
+    
+    return render(request, 'rezerwacja_samochodow/auth/login.html')
