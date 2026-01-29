@@ -99,7 +99,12 @@
 
         <form method="post">
             {% csrf_token %}
+            {% if forms.errors %}
             
+            <div class="alert alert-danger">
+                {{form.errors }}     
+            </div>
+            {% endif %}
             <div class="form-group">
                 <label for="username">Nazwa użytkownika</label>
                 <input type="text" id="username" name="username" required placeholder="Np. jan_kowalski">
@@ -120,11 +125,12 @@
                 <input type="password" id="password_confirm" name="password_confirm" required placeholder="Powtórz hasło">
             </div>
 
+
             <button type="submit" class="btn-submit">Zarejestruj się</button>
         </form>
         
         <p style="margin-top: 20px; color: #777;">
-            Masz już konto? <a href="{% url 'login' %}" style="color: #007bff; text-decoration: none;">Zaloguj się</a>
+            Masz już konto? <a href="{% url 'login_html' %}" style="color: #007bff; text-decoration: none;">Zaloguj się</a>
         </p>
     </div>
 </div>

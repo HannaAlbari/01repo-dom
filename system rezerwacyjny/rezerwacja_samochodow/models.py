@@ -16,7 +16,7 @@ class Profile(models.Model):
 #każdy profil nalezy do jednego uzytkownika troche profil uzytkownika to rozszerzenie, usunięcie uzytkownika = usuniecie konta, jesli nie podasz roli to automatycznie przypisany jest user
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='user')
-    
+#dodaj nazwisko bla bla bla  
     def __str__(self):
         return f"{self.user.username} ({self.role})"
 

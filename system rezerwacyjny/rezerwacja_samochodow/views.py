@@ -14,6 +14,7 @@ from django.contrib.auth import logout
 from django.contrib.admin.views.decorators import staff_member_required
 from .models import *
 from .serializers import *
+from .forms import *
 #from .permissions import IsAdminOrReadOnly
 
 # lecimy z rezerwacjami - rejestracja osoby do api z ograniczeniem (he he umysłowym)
@@ -93,15 +94,26 @@ class UserReservationsList(APIView):
         return Response(serializer.data)
  
 # views.py
-
+#przerobić na class!!!! <-Jednak zostawiam Ufff 
 def home_view(request):
     return render(request, 'rezerwacja_samochodow/home.html')
 
 def login_view(request):
     return render(request, 'rezerwacja_samochodow/auth/login.html')
 
+
 def register_view(request):
-    return render(request, 'rezerwacja_samochodow/auth/register.html')
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home_view')
+    else:
+        form = UserForm()
+    return render(request, 'rezerwacja_samochodow/auth/register.html',
+    {'form': form}
+    )
+
 
 @staff_member_required
 def create_car_view(request):
@@ -120,7 +132,7 @@ def create_reservations_view(request):
 @login_required(login_url='login')
 def user_list_view(request):
     reservation = Reservation.objects.filter(user=request.user)
-    return render(request, 'rezerwacja_samochodow/reserwations/user_list.html',
+    return render(request, 'rezerwacja_samochodow/reservations/user_list.html',
                   {'reservation': reservation})
 
 def logout_view(request):

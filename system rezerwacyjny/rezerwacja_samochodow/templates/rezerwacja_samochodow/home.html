@@ -120,65 +120,66 @@
 
 {% block content %}
 <div class="hero">
-    <h1>Find Your Perfect Ride</h1>
-    <p>Rent premium cars at unbeatable prices. Quick, easy, and reliable.</p>
+    <h1>Wyszukaj swoje idealne auto</h1>
+    <p>Wynajmij auto premium.</p>
     <div class="hero-buttons">
-        <a href="{% url 'car_list_html' %}" class="btn btn-primary">Browse Cars</a>
-        <a href="{% url 'register_html' %}" class="btn btn-secondary">Get Started</a>
+        <a href="{% url 'car_list_html' %}" class="btn btn-primary">Wyszukaj swoje auto</a>
+        <a href="{% url 'register_html' %}" class="btn btn-secondary">Start</a>
     </div>
 </div>
 
 <div class="stats">
     <div class="stat-item">
         <h2>500+</h2>
-        <p>Cars Available</p>
+        <p>Dostępnych aut</p>
     </div>
     <div class="stat-item">
         <h2>10K+</h2>
-        <p>Happy Customers</p>
+        <p>Zadowolonych klientów</p>
     </div>
     <div class="stat-item">
         <h2>24/7</h2>
-        <p>Customer Support</p>
+        <p>Pomoc</p>
     </div>
 </div>
 
 <div class="features">
     <div class="feature-card">
         <div class="feature-icon">🚘</div>
-        <h3>Wide Selection</h3>
-        <p>Choose from hundreds of cars ranging from economy to luxury vehicles.</p>
+        <h3>Szeroki wybór</h3>
+        <p>Wybieraj spośród setek samochodów – od ekonomicznych po luksusowe.</p>
     </div>
     <div class="feature-card">
         <div class="feature-icon">💰</div>
-        <h3>Best Prices</h3>
-        <p>Competitive rates with no hidden fees. What you see is what you pay.</p>
+        <h3>Najlepsze ceny</h3>
+        <p>Konkurencyjne stawki bez ukrytych opłat. Płacisz dokładnie tyle, ile widzisz.</p>
     </div>
     <div class="feature-card">
         <div class="feature-icon">⚡</div>
-        <h3>Instant Booking</h3>
-        <p>Book your car in seconds and get instant confirmation.</p>
+        <h3>Natychmiastowa rezerwacja</h3>
+        <p>Zarezerwuj samochód w kilka sekund i otrzymaj natychmiastowe potwierdzenie.</p>
     </div>
     <div class="feature-card">
         <div class="feature-icon">🛡️</div>
-        <h3>Fully Insured</h3>
-        <p>All our vehicles come with comprehensive insurance coverage.</p>
+        <h3>Pełne ubezpieczenie</h3>
+        <p>Wszystkie nasze pojazdy objęte są kompleksowym ubezpieczeniem.</p>
     </div>
     <div class="feature-card">
         <div class="feature-icon">📍</div>
-        <h3>Multiple Locations</h3>
-        <p>Pick up and drop off at convenient locations across the city.</p>
+        <h3>Wiele lokalizacji</h3>
+        <p>Odbiór i zwrot w dogodnych punktach na terenie całego miasta.</p>
     </div>
     <div class="feature-card">
         <div class="feature-icon">⭐</div>
-        <h3>Top Rated</h3>
-        <p>Trusted by thousands with an average rating of 4.8/5 stars.</p>
+        <h3>Najwyżej oceniani</h3>
+        <p>Zaufały nam tysiące klientów – średnia ocena 4,8/5 gwiazdek.</p>
     </div>
 </div>
 
 <div class="cta-section">
-    <h2>Ready to Hit the Road?</h2>
-    <p>Join thousands of satisfied customers who trust us for their car rental needs.</p>
-    <a href="{% url 'car_list_html' %}" class="btn btn-secondary">View All Cars</a>
+    <h2>Gotowy wyruszyć w drogę?</h2>
+    <p>Dołącz do tysięcy zadowolonych klientów, którzy nam zaufali.</p>
+    <a href="{% url 'car_list_html' %}" class="btn btn-secondary">Zobacz wszystkie samochody</a>
 </div>
+
 {% endblock %}

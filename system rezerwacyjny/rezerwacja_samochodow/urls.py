@@ -20,7 +20,8 @@ urlpatterns = [
     path('login-page/', views.login_view, name='login_html'),
     path('reservation/', views.create_reservations_view, name='create_reservations_html'),
     #path('', views.home_view, name='home'),   
-    #tu EP do API
+    
+    #tu URLS do API
 
     path('register/', RegisterViewSet.as_view(), name='register'),
     path('login/', LoginView.as_view(), name='login'),

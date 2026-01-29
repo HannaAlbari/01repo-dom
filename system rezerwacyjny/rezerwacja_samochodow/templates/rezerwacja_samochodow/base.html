@@ -157,16 +157,16 @@
 <body>
     <nav>
         <div class="nav-container">
-            <a href="{% url 'home' %}" class="logo">🚗 CarRental</a>
+            <a href="{% url 'home' %}" class="logo">🚗 System rezerwacji samochodów</a>
             <ul class="nav-links">
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'car_list_html' %}">Browse Cars</a></li>
+                <li><a href="{% url 'home' %}">Strona główna</a></li>
+                <li><a href="{% url 'car_list_html' %}">Wyszukaj auto</a></li>
                 {% if user.is_authenticated %}
-                    <li><a href="{% url 'create_reservations_html' %}">My Reservations</a></li>
-                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                    <li><a href="{% url 'create_reservations_html' %}">Moje rezerwacje</a></li>
+                    <li><a href="{% url 'logout' %}">Wyloguj</a></li>
                 {% else %}
-                    <li><a href="{% url 'login_html' %}">Login</a></li>
-                    <li><a href="{% url 'register_html' %}">Register</a></li>
+                    <li><a href="{% url 'login_html' %}">Zaloguj</a></li>
+                    <li><a href="{% url 'register_html' %}">Zarejestruj się</a></li>
                 {% endif %}
             </ul>
         </div>
