@@ -91,43 +91,36 @@
     <div class="register-card">
         <h2>Stwórz konto</h2>
 
-        {% if error %}
-            <div class="error-message">
-                {{ error }}
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                {{ form.errors }}
             </div>
         {% endif %}
 
         <form method="post">
             {% csrf_token %}
-            {% if forms.errors %}
-            
-            <div class="alert alert-danger">
-                {{form.errors }}     
-            </div>
-            {% endif %}
-            <div class="form-group">
-                <label for="username">Nazwa użytkownika</label>
-                <input type="text" id="username" name="username" required placeholder="Np. jan_kowalski">
-            </div>
+<div class="form-group">
+        <label for="username">Nazwa użytkownika</label>
+        <input type="text" name="username" id="username" required>
+    </div>
 
-            <div class="form-group">
-                <label for="email">Adres email</label>
-                <input type="email" id="email" name="email" required placeholder="jan@example.com">
-            </div>
+    <div class="form-group">
+        <label for="email">Adres email</label>
+        <input type="email" name="email" id="email" required>
+    </div>
 
-            <div class="form-group">
-                <label for="password">Hasło</label>
-                <input type="password" id="password" name="password" required placeholder="Minimum 8 znaków">
-            </div>
+    <div class="form-group">
+        <label for="password">Hasło</label>
+        <input type="password" name="password1" id="password" required>
+    </div>
 
-            <div class="form-group">
-                <label for="password_confirm">Powtórz hasło</label>
-                <input type="password" id="password_confirm" name="password_confirm" required placeholder="Powtórz hasło">
-            </div>
+    <div class="form-group">
+        <label for="password_confirm">Powtórz hasło</label>
+        <input type="password" name="password2" id="password_confirm" required>
+    </div>
 
-
-            <button type="submit" class="btn-submit">Zarejestruj się</button>
-        </form>
+    <button type="submit" class="btn-submit">Zarejestruj się</button>        
+	</form>
         
         <p style="margin-top: 20px; color: #777;">
             Masz już konto? <a href="{% url 'login_html' %}" style="color: #007bff; text-decoration: none;">Zaloguj się</a>

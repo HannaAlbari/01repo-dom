@@ -6,4 +6,4 @@ class UserForm(UserCreationForm):
     email = forms.EmailField(required = True)
     class Meta:
         model = User 
-        fields = ["username", "email", "password"]
+        fields = ["username", "email"]

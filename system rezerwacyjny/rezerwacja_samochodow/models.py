@@ -26,15 +26,15 @@ class Profile(models.Model):
 class Car(models.Model):
     DRIVE_TYPES = (('E', 'Elektryczny'),('H', 'Hybrydowy'),('S', 'Spalinowy'),)
 #wiele aut do jednej marki to to co było wielw do jednego
-    brand = models.CharField(max_length=50, unique=True)
+    brand = models.CharField(max_length=50)
     model = models.CharField(max_length=20)
     year = models.PositiveIntegerField()
 
 #automatycznie przypisany samochod spalinowy jesli uzytkownik nie wybierze nic
-    Car_TYPES = models.CharField(max_length=20, choices=DRIVE_TYPES, default='Spalinowy')
+    car_types= models.CharField(max_length=20, choices=DRIVE_TYPES, default='Spalinowy')
     
     def __str__(self):
-        return f"{self.brand.name} {self.model} ({self.year})- {self.get_drive_type_display()}"
+        return f"{self.brand} {self.model} ({self.year})- {self.car_types}"
 
 #model4.  model rezerwacji
 def validate_future(value):
@@ -52,9 +52,9 @@ class Reservation(models.Model):
     def __str__(self):
         return f"{self.user.username} -> {self.car}"
 
-def clean(self):
-    if self.date_to < self.date_from:
-        raise ValidationError("Data zakończeni musi być później niż rozpoczęcia.")
+    def clean(self):
+        if self.date_to < self.date_from:
+            raise ValidationError("Data zakończeni musi być później niż rozpoczęcia.")
 
 
 #model5. model recenzji auta
@@ -68,6 +68,6 @@ class Review(models.Model):
     comment = models.TextField()
 
     def __str__(self):
-        return f" ocena{self.rating}/5 dla {self.car}"
+        return f"ocena{self.rating}/5 dla {self.car}"
 
 

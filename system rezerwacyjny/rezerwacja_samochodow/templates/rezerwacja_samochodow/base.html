@@ -162,7 +162,7 @@
                 <li><a href="{% url 'home' %}">Strona główna</a></li>
                 <li><a href="{% url 'car_list_html' %}">Wyszukaj auto</a></li>
                 {% if user.is_authenticated %}
-                    <li><a href="{% url 'create_reservations_html' %}">Moje rezerwacje</a></li>
+                    <li><a href="{% url 'user_list_view' %}">Moje rezerwacje</a></li>
                     <li><a href="{% url 'logout' %}">Wyloguj</a></li>
                 {% else %}
                     <li><a href="{% url 'login_html' %}">Zaloguj</a></li>

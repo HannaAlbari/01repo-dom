@@ -115,7 +115,7 @@
                 <select name="car_id" id="car" class="form-control" required>
                     <option value="" disabled selected>-- Kliknij, aby wybrać auto --</option>
                     {% for car in cars %}
-                        <option value="{{ car.id }}">{{ car.brand.name }} {{ car.model }} ({{ car.year }})</option>
+                        <option value="{{ car.id }}">{{ car.brand }} {{ car.model }} ({{ car.year }})</option>
                     {% empty %}
                         <option value="" disabled>Brak dostępnych samochodów</option>
                     {% endfor %}

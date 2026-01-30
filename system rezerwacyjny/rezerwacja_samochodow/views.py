@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 #Mój widok
 from rest_framework.views import APIView
@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import permission_classes
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib.admin.views.decorators import staff_member_required
@@ -98,16 +99,14 @@ class UserReservationsList(APIView):
 def home_view(request):
     return render(request, 'rezerwacja_samochodow/home.html')
 
-def login_view(request):
-    return render(request, 'rezerwacja_samochodow/auth/login.html')
-
 
 def register_view(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('home_view')
+            user = form.save()
+            login(request, user)
+            return redirect('home')
     else:
         form = UserForm()
     return render(request, 'rezerwacja_samochodow/auth/register.html',
@@ -119,21 +118,52 @@ def register_view(request):
 def create_car_view(request):
     return render(request, 'rezerwacja_samochodow/cars/create.html')
 
-def detail_view(request):
-    return render(request, 'rezerwacja_samochodow/cars/detail.html')
+def detail_view(request, pk):
+    car = get_object_or_404(Car, pk=pk)
+    return render(request, 'rezerwacja_samochodow/cars/detail.html', {'car': car})
 
 def list_view(request):
-    return render(request, 'rezerwacja_samochodow/cars/list.html')
+    cars = Car.objects.all()
+    return render(request, 'rezerwacja_samochodow/cars/list.html', {'cars': cars})
 
 @login_required(login_url='login')
 def create_reservations_view(request):
-    return render(request, 'rezerwacja_samochodow/reservations/create.html')
+    if request.method == 'POST':
+        car_id = request.POST.get('car_id')
+        date_from = request.POST.get('date_from')
+        date_to = request.POST.get('date_to')
+        
+        try:
+            car = Car.objects.get(pk=car_id)
+            
+            reservation = Reservation.objects.create(
+                user=request.user,
+                car=car,
+                date_from=date_from,
+                date_to=date_to
+            )
+            
+            messages.success(request, 'Rezerwacja została pomyślnie utworzona!')
+            return redirect('user_list_view')  # przekierowanie do listy rezerwacji użytkownika
+            
+        except Car.DoesNotExist:
+            return render(request, 'rezerwacja_samochodow/reservations/create.html', {
+                'cars': Car.objects.all(),
+                'error': 'Wybrany samochód nie istnieje'
+            })
+        except ValidationError as e:
+            return render(request, 'rezerwacja_samochodow/reservations/create.html', {
+                'cars': Car.objects.all(),
+                'error': str(e)
+            })
+    
+    cars = Car.objects.all()
+    return render(request, 'rezerwacja_samochodow/reservations/create.html', {'cars': cars})
 
-@login_required(login_url='login')
 def user_list_view(request):
-    reservation = Reservation.objects.filter(user=request.user)
+    reservations = Reservation.objects.filter(user=request.user) 
     return render(request, 'rezerwacja_samochodow/reservations/user_list.html',
-                  {'reservation': reservation})
+                  {'reservation': reservations})  
 
 def logout_view(request):
     logout(request)
